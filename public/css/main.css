@@ -1,0 +1,22 @@
+#loginButton {
+    margin-top: 2%;
+}
+
+#homeCard {
+    width: 18rem;
+    margin-bottom: 5%;
+}
+
+#homeCardBody {
+    background-color: azure;
+}
+
+#filmCard {
+    margin: auto;
+    margin-top: 2%;
+    width: 90%;
+}
+
+#link {
+    text-decoration: none;
+}

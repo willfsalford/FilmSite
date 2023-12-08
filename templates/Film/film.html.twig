@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for f in film %}
+        <div class="container">
+            <div id="filmCard" class="card mb-4 col align-self-center" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/images/posters/{{ f.imageName }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div id="filmCardBody" class="card-body">
+                            <h5 class="card-title">{{ f.title }}</h5>
+                            <p class="card-text">{{ f.director }}</p>
+                            <p class="card-text"><small class="text-muted">{{ f.actors }}</small></p>
+                            <p class="card-text"><small class="text-muted">User score: {{ averageReview }}/5</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-light mt-4 p-4">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <h1>Leave a review</h1>
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                {{ form_row(form.reviewer, {
+                    label: 'Email',
+                    value: app.user.email
+                }) }}
+                {{ form_row(form.film, {
+                    value: f.title
+                }) }}
+                {{ form_row(form.reviewText, {
+                    label: 'Leave Review'
+                }) }}
+                {{ form_row(form.rating, {
+                    label: 'Rating'
+                }) }}
+                <button type="submit" class="btn btn-primary">Upload</button>
+                {{ form_end(form) }}
+            {% else %}
+                <h1>Login to leave a review</h1>
+            {% endif %}
+        </div>
+        {% for r in reviews %}
+            {% dump r.id %}
+            <div class="card">
+                <div class="card-header">
+                    {{ r.film }}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{ r.reviewText }}</p>
+                        <footer class="blockquote-footer">{{ r.rating }}/5 <cite title="Source Title">{{ r.reviewer }}</cite></footer>
+                    </blockquote>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if app.user.email == r.reviewer %}
+                            <button type="button" class="btn btn-outline-danger me-2"><a href="/film_page/{{ r.film }}/{{ r.id }}/edit">Edit</a></button>
+                            <button type="button" class="btn btn-outline-danger me-2"><a href="/film_page/{{ r.film }}/{{ r.id }}/delete">Delete</a></button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

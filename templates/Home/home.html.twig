@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey }}
+        </div>
+    {% endif %}
+<h1></h1>
+    <div class="container">
+        <div class="row">
+        {% for film in allFilms %}
+            <div id="film" class="col">
+                <div id="homeCard" class="card">
+                    <img src='images/posters/{{ film.imageName }}' class="card-img-top" alt="...">
+                    <div id="homeCardBody" class="card-body">
+                        <h5 class="card-title">{{ film.title }}</h5>
+                        <p class="card-text">Director: {{ film.director }}</p>
+                        <p class="card-text">Cast: {{ film.actors }}</p>
+                        <p class="card-text">Runtime: {{ film.runTime }} minuets</p>
+                        <a href="{{ path('filmpage', {'slug': film.title}) }}" class="btn btn-primary">Read Reviews</a>
+                        {% if is_granted('ROLE_MOD') %}
+                            <button type="button" class="btn btn-outline-danger me-2"><a href="/{{ film.id }}/delete">Delete</a></button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

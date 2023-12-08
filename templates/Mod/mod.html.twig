@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="bg-light mt-4 p-4">
+                {% if is_granted('ROLE_MOD') %}
+                    <h3>Congratulations you are a moderator</h3>
+                {% else %}
+                    {{ form_errors(form) }}
+
+                    {{ form_start(form) }}
+                    {{ form_row(form.becomeMod, {
+                        label: 'Would you like to become a moderator',
+                    }) }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        <div class="row">
+    </div>
+{% endblock %}

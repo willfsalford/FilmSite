@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Film Upload{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="bg-light mt-4 p-4">
+                <h1>Upload Film</h1>
+
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                {{ form_row(form.title, {
+                    label: 'title'
+                }) }}
+                {{ form_row(form.director, {
+                    label: 'Director'
+                }) }}
+                {{ form_row(form.actors, {
+                    label: 'Actors'
+                }) }}
+                {{ form_row(form.runTime, {
+                    label: 'Run Time in minutes'
+                }) }}
+                {{ form_row(form.imageFile, {
+                    label: 'Photo'
+                }) }}
+
+                <button type="submit" class="btn btn-primary">Upload</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
